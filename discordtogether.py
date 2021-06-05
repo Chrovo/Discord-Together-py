@@ -3,16 +3,20 @@ import discord
 import aiohttp
 import asyncio
 from discord.ext import commands
-from exceptions import InvalidTokenError, InvalidOptionError, InvalidVoiceChannelError
+from exceptions import InvalidTokenError, InvalidOptionError, InvalidVoiceChannelError, HTTPConnectionError
 
 #Create the class
 class DiscordTogether:
-    def __init__(self, token:int):
+    def __init__(self,*, token:int):
         self.token = token
         self.conversions = {
-            "youtube":"755600276941176913"
+            "youtube":"755600276941176913", #Credit goes to RemyK888 for all of these ids, thanks.
+            'poker''755827207812677713',
+            'betrayal':'773336526917861400',
+            'fishing':'814288819477020702',
+            'chess':'832012586023256104'
         }
-        self.options = ["youtube"]
+        self.options = ["youtube", "poker", "betrayal","fishing","chess"]
 
     async def activity(self, *,option:str, vc_id:int):
         try:
