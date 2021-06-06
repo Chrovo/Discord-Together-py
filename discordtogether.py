@@ -7,24 +7,36 @@ from exceptions import InvalidTokenError, InvalidOptionError, InvalidVoiceChanne
 
 #Create the class
 class DiscordTogether:
+    """This is the class that allows you to create a Discord-Together activity
+    ---
+    Attributes
+    token:int - This represents your bot token/discord api Token
+    ---
+    Methods
+    async activity
+    This gets the invite link for discord together and returns it.
+    This coroutine also takes in 3 arguments
+        1.) ctx:commands.Context - This is the context the command was invoked under(as stated in the discord.py docs)
+        2.) option:str - This is a kwarg that takes in the discord together option you chose.
+        3.) vc_id:int - This is the voice channel id we need for the discord together activity to function.
+    """
     def __init__(self,*, token:int):
         self.token = token
         self.conversions = {
             "youtube":"755600276941176913", #Credit goes to RemyK888 for all of these ids, thanks.
-            'poker''755827207812677713',
+            'poker':'755827207812677713',
             'betrayal':'773336526917861400',
             'fishing':'814288819477020702',
             'chess':'832012586023256104'
         }
         self.options = ["youtube", "poker", "betrayal","fishing","chess"]
 
-    async def activity(self, *,option:str, vc_id:int):
-        try:
-            random_var=commands.VoiceChannelConverter(vc_id)
-        except commands.ChannelNotFound:
+    async def activity(self, ctx:commands.Context, *,option:str, vc_id:int):
+        check = discord.utils.get(ctx.guild.voice_channels, id = vc_id)
+        if check == None:
             raise InvalidVoiceChannelError("Invalid voice channel id provided")
-        if option.lower() in self.options:
-            opt_id = self.conversions[option]
+        elif option.lower() in self.options and check != None:
+            opt_id = self.conversions[option.lower()]
             async with aiohttp.ClientSession() as cs:
                 try:
                     async with cs.post(f"https://discord.com/api/v8/channels/{vc_id}/invites", json={
@@ -47,4 +59,4 @@ class DiscordTogether:
                 except:
                     raise InvalidTokenError("Invalid token was provided")
         else:
-            raise InvalidOptionError(f"Invalid option '{self.option}' provided")
+            raise InvalidOptionError(f"Invalid option '{option}' provided")
