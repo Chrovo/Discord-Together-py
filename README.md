@@ -9,7 +9,7 @@ This package is discord-together for python. Here is an example of what the code
 ```python
 import discord
 from discord.ext import commands
-#Import this package
+from Discord_Together_py import DiscordTogether
 client = commands.Bot(command_prefix = "!")
 
 @client.command()
