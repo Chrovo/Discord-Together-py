@@ -38,25 +38,24 @@ class DiscordTogether:
         elif option.lower() in self.options and check != None:
             opt_id = self.conversions[option.lower()]
             async with aiohttp.ClientSession() as cs:
-                try:
-                    async with cs.post(f"https://discord.com/api/v8/channels/{vc_id}/invites", json={
-                        "max_age":86400,
-                        "max_uses":0,
-                        "target_application_id":opt_id,
-                        "target_type":2,
-                        "temporary":False,
-                        "validate":None
-                  }, headers = {
-                    "Authorization":f"Bot {self.token}",
-                    "Content-Type":"application/json"
-                  }) as r:
-                        if r.status in range(200,300):
-                            data = await r.json()
-                            invitecode = data['code']
-                            return invitecode
-                        else:
-                            raise HTTPConnectionError(f"Connection was unsuccessful: {r.status}:{r.reason}")
-                except:
-                    raise InvalidTokenError("Invalid token was provided")
+                async with cs.post(f"https://discord.com/api/v8/channels/{vc_id}/invites", json={
+                    "max_age":86400,
+                    "max_uses":0,
+                    "target_application_id":opt_id,
+                    "target_type":2,
+                    "temporary":False,
+                    "validate":None
+                    }, headers = {
+                "Authorization":f"Bot {self.token}",
+                "Content-Type":"application/json"
+                }) as r:
+                    if r.status in range(200,300):
+                        data = await r.json()
+                        invitecode = data['code']
+                        return invitecode
+                    elif r.status == 401:
+                        raise InvalidTokenError("Invalid token was provided")
+                    else:
+                        raise HTTPConnectionError(f"Connection was unsuccessful: {r.status}:{r.reason}")
         else:
             raise InvalidOptionError(f"Invalid option '{option}' provided")
