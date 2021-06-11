@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
         name="Discord-Together-py",
@@ -10,6 +10,6 @@ setup(
         classifiers = ["Intended Audience::Developers", "Programming Language::Python", "Natural Language::English","Programming Languuage::Python::3"],
         install_requires = ['discord.py','aiohttp'],
         license = "MIT",
-        packages = find_packages(),
-        keywords="discord-together",
+        packages = ["Discord_Together"],
+        keywords="discord-together"
 )
