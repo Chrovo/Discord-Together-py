@@ -2,8 +2,12 @@
 
 ---
 
-## Installation
+### Installation
 `pip install git+https://github.com/Chrovo/Discord-Together-py`
+
+---
+
+###Example and Description
 
 This package is discord-together for python. Here is an example of what the code should look like with this package:
 ```python
