@@ -3,7 +3,7 @@ import discord
 import aiohttp
 import asyncio
 from discord.ext import commands
-from exceptions import InvalidTokenError, InvalidOptionError, InvalidVoiceChannelError, HTTPConnectionError
+from .exceptions import InvalidTokenError, InvalidOptionError, InvalidVoiceChannelError, HTTPConnectionError
 
 #Create the class
 class DiscordTogether:
@@ -35,7 +35,9 @@ class DiscordTogether:
         check = discord.utils.get(ctx.guild.voice_channels, id = vc_id)
         if check == None:
             raise InvalidVoiceChannelError("Invalid voice channel id provided")
-        elif option.lower() in self.options and check != None:
+        if option.lower() not in self.options:
+            raise InvalidOptionError(f"Invalid option '{option}' provided")
+        else:
             opt_id = self.conversions[option.lower()]
             async with aiohttp.ClientSession() as cs:
                 async with cs.post(f"https://discord.com/api/v8/channels/{vc_id}/invites", json={
@@ -57,5 +59,3 @@ class DiscordTogether:
                         raise InvalidTokenError("Invalid token was provided")
                     else:
                         raise HTTPConnectionError(f"Connection was unsuccessful: {r.status}:{r.reason}")
-        else:
-            raise InvalidOptionError(f"Invalid option '{option}' provided")
