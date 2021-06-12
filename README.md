@@ -12,14 +12,14 @@
 This package is discord-together for python. Here is an example of what the code should look like with this package:
 ```python
 import discord
-import Discord_Together.discordtogether
+from Discord_Together.discordtogether import DiscordTogether
 from discord.ext import commands
 
 client = commands.Bot(command_prefix = "!")
 
 @client.command()
 async def yt(ctx, vc:commands.VoiceChannelConverter):
-  youtube = Discord_Together.discordtogether.DiscordTogether(token="token here")
+  youtube = DiscordTogether(token="token here")
   invite_code = await youtube.activity(ctx, option="youtube",vc_id=vc.id)
   await ctx.send(f"https://discord.com/invite/{invite_code}")
 ```
