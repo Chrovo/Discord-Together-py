@@ -20,7 +20,7 @@ class DiscordTogether:
         2.) option:str - This is a kwarg that takes in the discord together option you chose.
         3.) vc_id:int - This is the voice channel id we need for the discord together activity to function.
     """
-    def __init__(self,*, token:int):
+    def __init__(self,*, token:str):
         self.token = token
         self.conversions = {
             "youtube":"755600276941176913", #Credit goes to RemyK888 for all of these ids, thanks.
