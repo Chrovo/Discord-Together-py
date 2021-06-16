@@ -22,6 +22,8 @@ async def yt(ctx, vc:commands.VoiceChannelConverter):
   youtube = DiscordTogether(token="token here")
   invite_code = await youtube.activity(ctx, option="youtube",vc_id=vc.id)
   await ctx.send(f"https://discord.com/invite/{invite_code}")
+
+client.run("token here")
 ```
 ---
 
