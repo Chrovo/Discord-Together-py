@@ -1,11 +1,17 @@
-#Import all libraries
-import discord
-import aiohttp
 import asyncio
-from discord.ext import commands
-from .exceptions import InvalidTokenError, InvalidOptionError, InvalidVoiceChannelError, HTTPConnectionError
 
-#Create the class
+import aiohttp
+import discord
+from discord.ext import commands
+
+from .exceptions import (
+    InvalidTokenError, 
+    InvalidOptionError, 
+    InvalidVoiceChannelError, 
+    HTTPConnectionError,
+)
+
+
 class DiscordTogether:
     """This is the class that allows you to create a Discord-Together activity
     ---
@@ -20,38 +26,48 @@ class DiscordTogether:
         2.) option:str - This is a kwarg that takes in the discord together option you chose.
         3.) vc_id:int - This is the voice channel id we need for the discord together activity to function.
     """
-    def __init__(self,*, token:str):
+    def __init__(self, *, token: str) -> None:
         self.token = token
         self.conversions = {
-            "youtube":"755600276941176913", #Credit goes to RemyK888 for all of these ids, thanks.
+            "youtube": "755600276941176913",  # Credit goes to RemyK888 for all of these ids, thanks.
             'poker':'755827207812677713',
-            'betrayal':'773336526917861400',
-            'fishing':'814288819477020702',
-            'chess':'832012586023256104'
+            'betrayal': '773336526917861400',
+            'fishing': '814288819477020702',
+            'chess': '832012586023256104',
         }
-        self.options = ["youtube", "poker", "betrayal","fishing","chess"]
+        self.options = ["youtube", "poker", "betrayal", "fishing", "chess"]
 
-    async def activity(self, ctx:commands.Context, *,option:str, vc_id:int):
-        check = discord.utils.get(ctx.guild.voice_channels, id = vc_id)
-        if check == None:
+    async def activity(
+        self, 
+        ctx: commands.Context, *,
+        option: str, 
+        vc_id: int
+    ):
+        check = discord.utils.get(ctx.guild.voice_channels, id=vc_id)
+
+        if not check:
             raise InvalidVoiceChannelError("Invalid voice channel id provided")
         if option.lower() not in self.options:
             raise InvalidOptionError(f"Invalid option '{option}' provided")
         else:
             opt_id = self.conversions[option.lower()]
+
             async with aiohttp.ClientSession() as cs:
-                async with cs.post(f"https://discord.com/api/v8/channels/{vc_id}/invites", json={
-                    "max_age":86400,
-                    "max_uses":0,
-                    "target_application_id":opt_id,
-                    "target_type":2,
-                    "temporary":False,
-                    "validate":None
-                    }, headers = {
-                "Authorization":f"Bot {self.token}",
-                "Content-Type":"application/json"
-                }) as r:
-                    if r.status in range(200,300):
+                async with cs.post(f"https://discord.com/api/v8/channels/{vc_id}/invites", 
+                    json={
+                        "max_age": 86400,
+                        "max_uses": 0,
+                        "target_application_id": opt_id,
+                        "target_type": 2,
+                        "temporary": False,
+                        "validate": None,
+                    }, headers={
+                        "Authorization": f"Bot {self.token}",
+                        "Content-Type": "application/json",
+                    },
+                ) as r:
+
+                    if r.status in range(200, 300):
                         data = await r.json()
                         invitecode = data['code']
                         return invitecode
