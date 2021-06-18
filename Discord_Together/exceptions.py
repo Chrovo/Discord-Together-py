@@ -1,12 +1,16 @@
-class InvalidOptionError(Exception):
-    def __init__(self, errormessage):
-        self.errormessage = errormessage
-class InvalidTokenError(Exception):
-    def __init__(self, errormessage):
-        self.errormessage = errormessage
-class InvalidVoiceChannelError(Exception):
-    def __init__(self, errormessage):
-        self.errormessage = errormessage
-class HTTPConnectionError(Exception):
-    def __init__(self, errormessage):
-        self.errormessage = errormessage
+
+class BaseError(Exception):
+    def __init__(self, message: str) -> None:
+        self.message = message
+
+class InvalidOptionError(BaseError):
+    pass
+
+class InvalidTokenError(BaseError):
+    pass
+
+class InvalidVoiceChannelError(BaseError):
+    pass
+
+class HTTPConnectionError(BaseError):
+    pass
