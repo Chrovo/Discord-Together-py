@@ -40,3 +40,13 @@ Token - This is your discord api token, place it there.
 This method also takes in two arguments:
 - option: The option you want(i.e. YouTube Together)
 - vc_id: The voice channel id of where this activity will take place.
+
+---
+
+### Exceptions
+This package has a total of 4 exceptions.
+
+`InvalidTokenError`: This exception is raised if you don't enter a valid token.
+`InvalidOptionError`: This exception is raised if you enter an invalid option in the "option" keyword argument for the activity method.
+`InvalidVoiceChannelError`: This exception is raised when you enter an invalid voice channel id for the "vc_id" keyword argument in the activity method.
+`HTTPConnectionError`: This exception is raised if the connection to the discord API was unsuccessful. It includes the status code as well as the status code description.(eg. 404:Not Found).
