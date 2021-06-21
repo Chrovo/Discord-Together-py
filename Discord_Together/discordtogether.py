@@ -5,9 +5,9 @@ import discord
 from discord.ext import commands
 
 from .exceptions import (
-    InvalidTokenError, 
-    InvalidOptionError, 
-    InvalidVoiceChannelError, 
+    InvalidTokenError,
+    InvalidOptionError,
+    InvalidVoiceChannelError,
     HTTPConnectionError,
 )
 
@@ -28,32 +28,33 @@ class DiscordTogether:
     """
     def __init__(self, *, token: str) -> None:
         self.token = token
-        self.conversions = {
+
+    async def activity(
+        self,
+        ctx: commands.Context, *,
+        option: str,
+        vc_id: int
+    ):
+
+        all_options = ["youtube", "poker", "betrayal", "fishing", "chess"]
+        conversions = {
             "youtube": "755600276941176913",  # Credit goes to RemyK888 for all of these ids, thanks.
             'poker':'755827207812677713',
             'betrayal': '773336526917861400',
             'fishing': '814288819477020702',
             'chess': '832012586023256104',
         }
-        self.options = ["youtube", "poker", "betrayal", "fishing", "chess"]
-
-    async def activity(
-        self, 
-        ctx: commands.Context, *,
-        option: str, 
-        vc_id: int
-    ):
         check = discord.utils.get(ctx.guild.voice_channels, id=vc_id)
 
         if not check:
             raise InvalidVoiceChannelError("Invalid voice channel id provided")
-        if option.lower() not in self.options:
+        if option.lower() not in all_options:
             raise InvalidOptionError(f"Invalid option '{option}' provided")
         else:
-            opt_id = self.conversions[option.lower()]
+            opt_id = conversions[option.lower()]
 
             async with aiohttp.ClientSession() as cs:
-                async with cs.post(f"https://discord.com/api/v8/channels/{vc_id}/invites", 
+                async with cs.post(f"https://discord.com/api/v8/channels/{vc_id}/invites",
                     json={
                         "max_age": 86400,
                         "max_uses": 0,
