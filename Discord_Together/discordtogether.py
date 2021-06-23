@@ -11,7 +11,6 @@ from .exceptions import (
     HTTPConnectionError,
 )
 
-
 class DiscordTogether:
     """This is the class that allows you to create a Discord-Together activity
     ---
@@ -22,9 +21,9 @@ class DiscordTogether:
     async activity
     This gets the invite link for discord together and returns it.
     This coroutine also takes in 3 arguments
-        1.) ctx:commands.Context - This is the context the command was invoked under(as stated in the discord.py docs)
-        2.) option:str - This is a kwarg that takes in the discord together option you chose.
-        3.) vc_id:int - This is the voice channel id we need for the discord together activity to function.
+        1.) ctx:commands.Context - This is the context the command was invoked under(as stated in the discord.py docs), this is a regular argument.
+        2.) option:str - This is a kwarg that takes in the discord together option you chose.(This is a keyword argument).
+        3.) vc_id:int - This is the voice channel id we need for the discord together activity to function.(This is a keyword argument).
     """
     def __init__(self, *, token: str) -> None:
         self.token = token
