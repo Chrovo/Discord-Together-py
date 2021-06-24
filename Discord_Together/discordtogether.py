@@ -29,8 +29,7 @@ class DiscordTogether:
         self.token = token
 
     async def activity(
-        self,
-        ctx: commands.Context, *,
+        self, *,
         option: str,
         vc_id: int
     ):
