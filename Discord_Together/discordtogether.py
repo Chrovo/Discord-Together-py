@@ -43,10 +43,7 @@ class DiscordTogether:
             'fishing': '814288819477020702',
             'chess': '832012586023256104',
         }
-        check = discord.utils.get(ctx.guild.voice_channels, id=vc_id)
 
-        if not check:
-            raise InvalidVoiceChannelError("Invalid voice channel id provided")
         if option.lower() not in all_options:
             raise InvalidOptionError(f"Invalid option '{option}' provided")
         else:
@@ -73,5 +70,7 @@ class DiscordTogether:
                         return invitecode
                     elif r.status == 401:
                         raise InvalidTokenError("Invalid token was provided")
+                    elif r.status == 400:
+                        raise InvalidVoiceChannelError(f"Invalid voice channel id '{vc_id}' provided")
                     else:
                         raise HTTPConnectionError(f"Connection was unsuccessful: {r.status}:{r.reason}")
