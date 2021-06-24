@@ -20,7 +20,7 @@ client = commands.Bot(command_prefix = "!")
 @client.command()
 async def yt(ctx, vc:commands.VoiceChannelConverter):
   youtube = DiscordTogether(token="token here")
-  invite_code = await youtube.activity(ctx, option="youtube",vc_id=vc.id)
+  invite_code = await youtube.activity(option="youtube",vc_id=vc.id)
   await ctx.send(f"https://discord.com/invite/{invite_code}")
 
 client.run("token here")
@@ -38,7 +38,7 @@ Token - This is your discord api token, place it there.
 - The above is a coroutine, this will return the invite code for whatever option you have chosen.
 
 This method also takes in two arguments:
-- option: The option you want(i.e. YouTube Together)
+- option: The option you want(eg. YouTube Together)
 - vc_id: The voice channel id of where this activity will take place.
 
 ---
