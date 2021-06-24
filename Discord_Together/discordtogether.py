@@ -20,10 +20,9 @@ class DiscordTogether:
     Methods
     async activity
     This gets the invite link for discord together and returns it.
-    This coroutine also takes in 3 arguments
-        1.) ctx:commands.Context - This is the context the command was invoked under(as stated in the discord.py docs), this is a regular argument.
-        2.) option:str - This is a kwarg that takes in the discord together option you chose.(This is a keyword argument).
-        3.) vc_id:int - This is the voice channel id we need for the discord together activity to function.(This is a keyword argument).
+    This coroutine also takes in 2 arguments
+        1.) option:str - This is a kwarg that takes in the discord together option you chose.(This is a keyword argument).
+        2.) vc_id:int - This is the voice channel id we need for the discord together activity to function.(This is a keyword argument).
     """
     def __init__(self, *, token: str) -> None:
         self.token = token
