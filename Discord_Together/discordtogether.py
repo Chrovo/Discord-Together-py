@@ -33,8 +33,8 @@ class DiscordTogether:
         vc_id: int
     ):
 
-        all_options = ["youtube", "poker", "betrayal", "fishing", "chess"]
-        conversions = {
+        ALL_OPTIONS = ["youtube", "poker", "betrayal", "fishing", "chess"]
+        CONVERSIONS = {
             "youtube": "755600276941176913",  # Credit goes to RemyK888 for all of these ids, thanks.
             'poker':'755827207812677713',
             'betrayal': '773336526917861400',
@@ -42,10 +42,10 @@ class DiscordTogether:
             'chess': '832012586023256104',
         }
 
-        if option.lower() not in all_options:
+        if option.lower() not in ALL_OPTIONS:
             raise InvalidOptionError(f"Invalid option '{option}' provided")
         else:
-            opt_id = conversions[option.lower()]
+            opt_id = CONVERSIONS[option.lower()]
 
             async with aiohttp.ClientSession() as cs:
                 async with cs.post(f"https://discord.com/api/v8/channels/{vc_id}/invites",
