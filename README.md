@@ -11,26 +11,28 @@
 
 This package is discord-together for python. Here is an example of what the code should look like with this package:
 ```python
-import discord #This will import discord.py
-from Discord_Together.discordtogether import DiscordTogether # This will import this package.
+import discord
 from discord.ext import commands
+from Discord_Together.discordtogether import DiscordTogether # This will import this package.
 
-client = commands.Bot(command_prefix = "!")
+bot = commands.Bot(command_prefix = '!')
 
-#These next lines are creating a command.
-@client.command()
-async def yt(ctx, vc:commands.VoiceChannelConverter):
-  youtube = DiscordTogether(token="token here") #Create a DiscordTogether object.
-  invite_code = await youtube.activity(option="youtube",vc_id=vc.id) #This will return the invite code for YouTube Together for the channel the user has entered.
-  await ctx.send(f"https://discord.com/invite/{invite_code}") #This will send the link for the activity in the channel the command was invoked under.
+# These next lines are creating a command which uses this library.
+@bot.command()
+async def yt(ctx: commands.Context, vc: commands.VoiceChannelConverter):
+  youtube = DiscordTogether(token='token here') # Create a DiscordTogether object.
+  invite_code = await youtube.activity(option='youtube',vc_id=vc.id) # This will return the invite code for YouTube Together for the channel the user has entered.
+  await ctx.send(f'https://discord.com/invite/{invite_code}') # This will send the link for the activity in the channel the command was invoked under.
 
-client.run("token here")
+bot.run('token here')
 ```
 ---
 
 ### Attributes
 
-Token - This is your discord api token, place it there.
+token - This is your discord api token, place it there.
+
+session - This is your `aiohttp.ClientSession` instance if you have one, if not provided, it will be created for you. This parameter is optional.
 
 ---
 
