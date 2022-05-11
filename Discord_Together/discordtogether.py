@@ -1,5 +1,5 @@
 import asyncio
-from typing import Optional
+from typing import Optional, Literal
 
 import aiohttp
 import discord
@@ -35,7 +35,7 @@ class DiscordTogether:
 
     async def activity(
         self, *,
-        option: str,
+        option: Literal['youtube', 'poker', 'betrayal', 'fishing', 'chess'],
         vc_id: int
     ) -> str:
 
